@@ -2,7 +2,7 @@
 
     var loginRedirect = function () {
 
-        var loginUrl = "/login";
+        var loginUrl = "http://localhost:8080/civilization/login";
         var lastPath = "";
 
         this.setLoginUrl = function (value) {

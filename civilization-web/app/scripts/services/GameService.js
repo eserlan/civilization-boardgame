@@ -31,6 +31,16 @@
     };
     */
 
+      var joinGame = function(id) {
+          return $http.put("http://localhost:8080/civilization/" + id + "join")
+              .then(function(response) {
+                  $log.info("Joining game");
+                  return response.data;
+              });
+      };
+
+      //Authorization header "Basic " + B64Code.encode("cash1981" + ":" + "foo", StringUtil.__ISO_8859_1)
+
     var getAllGames = function() {
       return $http.get("http://localhost:8080/civilization/game")
              .then(function(response) {

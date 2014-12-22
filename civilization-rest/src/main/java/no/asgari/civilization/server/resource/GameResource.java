@@ -176,6 +176,9 @@ public class GameResource {
         return new PlayerAction(db).getRemaingTechsForPlayer(player.getId(), pbfId);
     }
 
+
+    
+
     @GET
     @Timed
     @Path("/{pbfId}/publiclog")
