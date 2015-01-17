@@ -3,29 +3,21 @@
   civApp.config(function ($provide) {
     $provide.provider("gameData", function () {
 
-      var baseUrl = "http://localhost:8080/civilization/game/";
-      this.setBaseUrl = function (url) {
-        baseUrl = url;
-      };
-
-      this.$get = function ($http, $q, $log) {
+      this.$get = function (Restangular, $q, $log, $http) {
         var games = [];
         $log.info("Creating game data service");
 
         var createGame = function (game) {
           games = [];
-          return $http.post(baseUrl, game)
-            .then(function (response) {
-              return response.data;
-            });
+          //TODO FIXME denne er ikke ferdig, den tar inn en json
+          $log.info("Creating game");
+          return Restangular.all('game').post(game);
         };
 
         var joinGame = function (game) {
           games = [];
-          return $http.put(baseUrl + game.id + "/join")
-            .then(function (response) {
-              return response.data;
-            });
+          $log.info("Join game, doing put");
+          return Restangular.one('game').one(game.id).one('join').put().$object;
         };
 
         var getGameById = function (id) {
@@ -41,17 +33,14 @@
             $log.info("Got games from cache");
             return $q.when(games);
           } else {
-            return $http.get(baseUrl)
-              .then(function (response) {
-                $log.info("Got games from API");
-                games = response.data;
-                return games;
-              });
+            $log.info("Got games from API");
+            games = Restangular.all('game').getList();
+            return games;
           }
         };
 
         var revealItem = function (gameId, logid) {
-          baseUrl = "http://localhost:8080/civilization/player/";
+          var baseUrl = "http://localhost:8080/civilization/player/";
           var url = baseUrl + gameId + "/revealItem/" + logid;
           return $http.put(url)
             .success(function (response) {

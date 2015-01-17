@@ -13,12 +13,14 @@
     'ngTouch',
     'ab-base64',
     'angular-growl',
+    'restangular',
     'ngTable'
   ]);
 
   application.config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/',
+      {
         templateUrl: 'views/list.html',
         controller: "GameListController as gameListCtrl",
         resolve: {
@@ -27,7 +29,8 @@
           }]
         }
       })
-      .when('/game/:id', {
+      .when('/game/:id',
+      {
         templateUrl: 'views/game.html'
         //Use resolve when you want the data to appear before going to the page
         /*
@@ -54,5 +57,26 @@
     growlProvider.globalPosition('top-center');
     growlProvider.onlyUniqueMessages(true);
   });
+
+  application.config(function(RestangularProvider) {
+    RestangularProvider.setBaseUrl('http://localhost:8080/civilization');
+    RestangularProvider.setRequestSuffix('');
+    RestangularProvider.setFullResponse(true);
+
+    RestangularProvider.setRequestInterceptor(function(elem, operation) {
+      if (operation === "remove") {
+        return undefined;
+      }
+      return elem;
+    });
+
+    RestangularProvider.setResponseExtractor(function(response) {
+      var newResponse = response;
+      newResponse.originalElement = angular.copy(response);
+      return newResponse;
+    });
+
+  });
+
 
 }());
