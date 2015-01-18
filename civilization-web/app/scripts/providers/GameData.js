@@ -21,11 +21,7 @@
         };
 
         var getGameById = function (id) {
-          var url = baseUrl + id;
-          return $http.get(url)
-            .then(function (response) {
-              return response.data;
-            });
+          return Restangular.one('game', id).get();
         };
 
         var getAllGames = function () {
@@ -34,7 +30,7 @@
             return $q.when(games);
           } else {
             $log.info("Got games from API");
-            games = Restangular.all('game').getList();
+            games = Restangular.all('game').getList().$object;
             return games;
           }
         };

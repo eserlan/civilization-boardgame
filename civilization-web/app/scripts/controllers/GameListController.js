@@ -1,6 +1,6 @@
 'use strict';
 (function (module) {
-  var GameListController = function (games, $log, gameData, currentUser) {
+  var GameListController = function (games, $log, gameData, currentUser, growl) {
     var model = this;
     model.user = currentUser.profile;
 
@@ -23,6 +23,7 @@
           model.game = game;
           $scope.userHasAccess = game.player && game.player.username === model.user.username;
           model.yourTurn = game.player && game.player.yourTurn;
+          growl.success("Successfully joined the game");
           return game;
         });
 
@@ -39,6 +40,6 @@
   };
 
   module.controller("GameListController",
-    ["games", "$log", "gameData", "currentUser", GameListController]);
+    ["games", "$log", "gameData", "currentUser", "growl", GameListController]);
 
 }(angular.module("civApp")));
