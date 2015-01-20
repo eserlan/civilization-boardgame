@@ -19,14 +19,7 @@ import no.asgari.civilization.server.model.Unit;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -219,5 +212,24 @@ public class PlayerResource {
         return Response.ok().build();
     }
 
+    @POST
+    @Path("/imageupload")
+    @Timed
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadImage(@Auth Player player, @NotEmpty @PathParam("pbfId") String pbfId) {
+        return null;
+    }
+
+
+    /**
+     * Either retrieve a specified image, or retrieve all images, which doesn't sound correct
+     */
+    @GET
+    @Path("/imagelatest")
+    @Timed
+    @Produces(MediaType.MULTIPART_FORM_DATA)
+    public Response getImage(@Auth Player player, @NotEmpty @PathParam("pbfId") String pbfId) {
+        return null;
+    }
 
 }
