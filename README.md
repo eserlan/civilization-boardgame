@@ -27,4 +27,6 @@ Future version will be a fully playable web client with drag and drop play
 * Grunt (http://gruntjs.com/)
 
 ##Installation
-Install what is required, and then run mvn clean install or mvn exec:java on civilization-rest and grunt serve on civilization-web
+Install what is required.
+To run the rest server, run mvn install and mvn exec:java on civilization-rest
+and to run the frontend server, run bower install, and then grunt serve on civilization-web
