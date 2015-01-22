@@ -7,6 +7,7 @@ import no.asgari.civilization.server.mongodb.AbstractMongoDBTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mongojack.ObjectId;
 
 import java.io.File;
 import java.io.InputStream;
@@ -30,11 +31,6 @@ public class ImageActionTest extends AbstractMongoDBTest {
         assertNotNull(url);
     }
 
-    @After
-    public void closeStream() throws Exception {
-        in.close();
-    }
-
     @Test
     public void saveImageThenReadIt() throws Exception {
         File file = new File(url.toURI().getPath());
@@ -46,8 +42,6 @@ public class ImageActionTest extends AbstractMongoDBTest {
         System.out.println(path);
 
         ImageAction imageAction = new ImageAction(db);
-
-
 
         //I will allow upload of image
         //Create temp image and store in mongodb
@@ -61,6 +55,8 @@ public class ImageActionTest extends AbstractMongoDBTest {
         GridFSDBFile imageForOutput = gfsImage.findOne("image");
         System.out.println(imageForOutput);
 
-        //gfsImage.getDB().dropDatabase();
+        org.bson.types.ObjectId id = (org.bson.types.ObjectId) gfsFile.getId();
+        //gfsImage.remove(id);
+        gfsImage.remove("image");
     }
 }

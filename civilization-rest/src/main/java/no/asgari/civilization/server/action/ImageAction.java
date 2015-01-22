@@ -6,6 +6,12 @@ import no.asgari.civilization.server.model.PBF;
 import no.asgari.civilization.server.model.Player;
 import org.mongojack.JacksonDBCollection;
 
+import javax.imageio.ImageIO;
+import java.io.InputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 @Log4j
 public class ImageAction extends BaseAction {
 
@@ -18,13 +24,21 @@ public class ImageAction extends BaseAction {
         this.pbfCollection = JacksonDBCollection.wrap(db.getCollection(PBF.COL_NAME), PBF.class, String.class);
     }
 
-    public void saveImage(String pbfId, String playerId, byte[] imageByte) {
+    public String saveImage(String pbfId, String playerId, InputStream imageStream) {
 
         //I will allow upload of image
         //Create temp image and store in mongodb
         //put the name of file as metadata, and date and who uploaded which will show the latest image
         //Store the metadata in the pbf collection
         //use the collection to view the data
+
+
+
+        //Path outputPath = FileSystems.getDefault().getPath(<upload-folder-on-server>, fileName);
+        //Files.copy(imageStream, outputPath);
+
+
+        return null;
     }
 
 }

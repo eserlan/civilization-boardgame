@@ -23,14 +23,11 @@ import javax.ws.rs.core.UriInfo;
 import com.codahale.metrics.annotation.Timed;
 import com.mongodb.DB;
 import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.FormDataParam;
 import io.dropwizard.auth.Auth;
 import lombok.extern.log4j.Log4j;
 import no.asgari.civilization.server.SheetName;
-import no.asgari.civilization.server.action.BattleAction;
-import no.asgari.civilization.server.action.DrawAction;
-import no.asgari.civilization.server.action.GameLogAction;
-import no.asgari.civilization.server.action.PlayerAction;
-import no.asgari.civilization.server.action.UndoAction;
+import no.asgari.civilization.server.action.*;
 import no.asgari.civilization.server.dto.ItemDTO;
 import no.asgari.civilization.server.model.GameLog;
 import no.asgari.civilization.server.model.Player;
@@ -233,12 +230,12 @@ public class PlayerResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadImage(
             @Auth Player player, @NotEmpty @PathParam("pbfId") String pbfId,
-            @FormParam("image") final InputStream fileInputStream,
-            @FormParam("image") final FormDataContentDisposition contentDispositionHeader) {
+            @FormDataParam("image") final InputStream imageInputStream,
+            @FormDataParam("image") final FormDataContentDisposition contentDispositionHeader) {
 
-//        java.nio.file.Path outputPath = FileSystems.getDefault().getPath(<upload-folder-on-server>, fileName);
-//        Files.copy(fileInputStream, outputPath);
-        return null;
+        ImageAction imageAction = new ImageAction(db);
+        String filepath = imageAction.saveImage(pbfId, player.getId(), imageInputStream);
+        return Response.ok().entity(filepath).build();
     }
 
 
