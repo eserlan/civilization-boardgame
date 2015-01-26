@@ -1,5 +1,6 @@
 package no.asgari.civilization.server.resource;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
@@ -233,8 +234,16 @@ public class PlayerResource {
             @FormDataParam("image") final InputStream imageInputStream,
             @FormDataParam("image") final FormDataContentDisposition contentDispositionHeader) {
 
+        String filename = contentDispositionHeader.getFileName();
+        //TODO Get mimetype maybe from contentDispositionHeader or @Context
+
         ImageAction imageAction = new ImageAction(db);
-        String filepath = imageAction.saveImage(pbfId, player.getId(), imageInputStream);
+        String filepath = null;
+        try {
+            filepath = imageAction.saveImage(pbfId, player.getId(), imageInputStream, filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return Response.ok().entity(filepath).build();
     }
 
