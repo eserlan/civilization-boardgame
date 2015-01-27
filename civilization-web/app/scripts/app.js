@@ -55,4 +55,9 @@
     growlProvider.onlyUniqueMessages(true);
   });
 
+  //TODO funker ikke
+  //application.config(['BaseUrlProvider', function (BaseUrlProvider) {
+  //  BaseUrlProvider.set('http://localhost:8080/civilization');
+  //}]);
+
 }());

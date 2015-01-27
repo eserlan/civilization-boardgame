@@ -3,11 +3,7 @@
 
   civApp.config(function ($provide) {
     $provide.provider("GameService", function () {
-
-      var baseUrl = "http://localhost:8080/civilization/game/";
-      this.setBaseUrl = function (url) {
-        baseUrl = url;
-      };
+      var baseUrl = "http://localhost:8080/civilization/game";
 
       this.$get = function ($http, $q, $log) {
         var games = [];
@@ -23,14 +19,14 @@
 
         var joinGame = function (game) {
           games = [];
-          return $http.put(baseUrl + game.id + "/join")
+          return $http.put(baseUrl + "/" + game.id + "/join")
             .then(function (response) {
               return response.data;
             });
         };
 
         var getGameById = function (id) {
-          var url = baseUrl + id;
+          var url = baseUrl + "/" + id;
           return $http.get(url)
             .then(function (response) {
               return response.data;
